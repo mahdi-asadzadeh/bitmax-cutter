@@ -13,6 +13,8 @@ class ErrorJSONType(type):
 
 class ErrorCode:
     SAMPLE_ERROR = (9940410001, 'sample error')
+    DUPLICATE_USER = (9940010002, 'duplicate user')
+    NOT_FOUND_USER = (9940410002, 'not found user')
 
     class dict(metaclass=ErrorJSONType):
         pass
