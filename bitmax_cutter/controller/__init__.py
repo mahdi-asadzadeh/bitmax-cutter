@@ -1,20 +1,23 @@
 import logging
 
-from fastapi import APIRouter
+import redis
+from fastapi import APIRouter, Depends
 from sqlalchemy.exc import SQLAlchemyError
 
-from .sample import route as sample_route
+
+from .user import route as user_route
 from bitmax_cutter import __version__
-from bitmax_cutter.models.database import get_conn
 from bitmax_cutter.core.errors import ok
+from bitmax_cutter.core.config import get_redis
+from bitmax_cutter.models.database import get_conn
 
 logger=logging.getLogger('uvicorn.error')
 route = APIRouter()
-route.include_router(sample_route, prefix="/sample", tags=['sample'])
+route.include_router(user_route, prefix="/user", tags=['User'])
 
 
 @route.get("/status")
-def home():
+def home(r: redis.Redis = Depends(get_redis)):
     db_connection = is_db_available()
     redis_connection = is_redis_available(r)
 
