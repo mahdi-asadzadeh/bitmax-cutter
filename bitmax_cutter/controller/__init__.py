@@ -4,7 +4,6 @@ import redis
 from fastapi import APIRouter, Depends
 from sqlalchemy.exc import SQLAlchemyError
 
-
 from .user import route as user_route
 from bitmax_cutter import __version__
 from bitmax_cutter.core.errors import ok
