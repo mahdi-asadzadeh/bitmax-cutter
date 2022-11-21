@@ -1,5 +1,8 @@
 from passlib.context import CryptContext
+from sqlalchemy.exc import NoResultFound
+
 from bitmax_cutter.models.dbmodels import User
+from bitmax_cutter.provides.binance import Binance
 
 pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -18,11 +21,22 @@ def register(first_name: str, last_name: str, username: str, password: str, db):
     db.commit()
     return new_user
 
-
 def login(username: str, password: str, db):
     user = db.query(User).filter(User.username == username).one()
     check_pass = Hash.verify(password, user.password)
     if check_pass:
-        return "123"
+        return user
     else:
-        return None 
+        raise NoResultFound
+
+def update(username: str, first_name: str, last_name: str, db):
+    user = db.query(User).filter(User.username == username).one()
+    user.first_name = first_name
+    user.last_name = last_name
+    db.commit()
+    return user
+
+def get_balance_binance(address: str):
+    bni = Binance("https://bsc-dataseed.binance.org/")
+    balance = bni.get_balance(address)
+    return balance
