@@ -9,6 +9,9 @@ class Settings(BaseSettings):
     redis_url: RedisDsn
     sqlalchemy_database_url: PostgresDsn
     jwt_pubkey: str
+    jwt_secretkey: str
+    algorithm: str
+    token_expire_minutes: int
     debug: bool
     port: str
     host:str
