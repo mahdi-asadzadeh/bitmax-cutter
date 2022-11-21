@@ -6,4 +6,5 @@ COPY . /app
 RUN /app/venv/bin/pip install  -e .
 WORKDIR /app/
 ENV MODULE_NAME=bitmax_cutter.main
-CMD ["./start.sh"]
+# CMD ["./start.sh"]
+CMD ["python", "bitmax_cutter/main.py"]

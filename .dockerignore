@@ -6,6 +6,5 @@ build
 *.log
 .git
 *.whl
-.env
 .env_example
 *.egg-info
